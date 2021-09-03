@@ -21,11 +21,11 @@ public class FlinkCDC {
 
         //1.1 开启CK并指定状态后端为FS    memory  fs  rocksdb
         env.setStateBackend(new FsStateBackend("hdfs://hadoop102:8020/gmall-flink-210325/ck"));
-        env.enableCheckpointing(5000L);
+        env.enableCheckpointing(5000L);//每次checkpoint头与头的间隔时间
         env.getCheckpointConfig().setCheckpointingMode(CheckpointingMode.EXACTLY_ONCE);
-        env.getCheckpointConfig().setCheckpointTimeout(10000L);
-        env.getCheckpointConfig().setMaxConcurrentCheckpoints(2);
-        env.getCheckpointConfig().setMinPauseBetweenCheckpoints(3000);
+        env.getCheckpointConfig().setCheckpointTimeout(10000L);//每次checkpoint的持续时间
+        env.getCheckpointConfig().setMaxConcurrentCheckpoints(2);//同时存在的checkpoint
+        env.getCheckpointConfig().setMinPauseBetweenCheckpoints(3000);//头与尾的间隔时间
 
         //env.setRestartStrategy(RestartStrategies.fixedDelayRestart());
 
